@@ -8,6 +8,7 @@ dist/
 .freebuff
 
 # Environments
+temp_auto_push.bat
 .venv/
 venv/
 
@@ -19,3 +20,7 @@ data/videos/
 reports/*.mp4
 reports/frames/
 reports/arcface_enrollments.json
+.gitignore
+branch_structure.json
+config.bat
+node_modules
