@@ -1,0 +1,18 @@
+# CPU-only stack.  Nothing here needs a GPU.
+#
+#   python -m venv .venv
+#   .venv/Scripts/python -m pip install -r requirements.txt      (Windows)
+#   .venv/bin/python    -m pip install -r requirements.txt      (Linux/macOS)
+#
+# For the smallest possible install, use the CPU-only torch index:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+numpy>=2.0
+opencv-python>=4.9          # YuNet face detector + drawing + video IO
+scipy>=1.11                 # optimal assignment (a numpy fallback is bundled)
+ultralytics>=8.3            # YOLOv8n person detector
+torch>=2.4                  # CPU build
+torchvision>=0.19
+
+# development / evaluation
+pytest>=8.0

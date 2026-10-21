@@ -1,0 +1,28 @@
+{
+  "robustness": {
+    "head_turn": {
+      "seeds": 5,
+      "passed": 5
+    },
+    "occlusion": {
+      "seeds": 5,
+      "passed": 5
+    },
+    "path_crossing": {
+      "seeds": 5,
+      "passed": 5
+    },
+    "long_absence": {
+      "seeds": 5,
+      "passed": 5
+    },
+    "combined": {
+      "seeds": 5,
+      "passed": 5
+    },
+    "_total": {
+      "seeds": 25,
+      "passed": 25
+    }
+  }
+}

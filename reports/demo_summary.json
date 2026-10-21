@@ -1,0 +1,15 @@
+{
+  "source": "data/videos/walking.mp4",
+  "frames": 25,
+  "fps": 4.82,
+  "mean_frame_ms": 203.45,
+  "state_log": [
+    {
+      "t": 0.0,
+      "state": "unknown",
+      "confidence": 0.0,
+      "identity": null,
+      "reason": "no target locked"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "decay_sweep": [
+    {
+      "tau_s": 0.5,
+      "half_life_s": 0.35,
+      "confidence_at_face_loss": 0.81,
+      "first_unknown_s": 0.6,
+      "predicted_s": 0.59,
+      "error_s": 0.01
+    },
+    {
+      "tau_s": 1.0,
+      "half_life_s": 0.69,
+      "confidence_at_face_loss": 0.893,
+      "first_unknown_s": 1.3,
+      "predicted_s": 1.27,
+      "error_s": 0.03
+    },
+    {
+      "tau_s": 2.0,
+      "half_life_s": 1.39,
+      "confidence_at_face_loss": 0.94,
+      "first_unknown_s": 2.67,
+      "predicted_s": 2.65,
+      "error_s": 0.02
+    },
+    {
+      "tau_s": 4.0,
+      "half_life_s": 2.77,
+      "confidence_at_face_loss": 0.965,
+      "first_unknown_s": 5.43,
+      "predicted_s": 5.4,
+      "error_s": 0.03
+    },
+    {
+      "tau_s": 8.0,
+      "half_life_s": 5.55,
+      "confidence_at_face_loss": 0.978,
+      "first_unknown_s": 10.93,
+      "predicted_s": 10.91,
+      "error_s": 0.02
+    }
+  ]
+}

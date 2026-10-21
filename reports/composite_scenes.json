@@ -1,0 +1,411 @@
+{
+  "video": "data/videos/walking.mp4",
+  "canvas": [
+    640,
+    360
+  ],
+  "scenes": {
+    "head_turn": {
+      "frames": 240,
+      "metrics": {
+        "frames": 240,
+        "duration_s": 8.0,
+        "locked": true,
+        "locked_at": 1.2,
+        "identities_claimed": 1,
+        "identities_created": 1,
+        "state_frames": {
+          "confirmed": 143,
+          "temporary": 60,
+          "unknown": 37
+        },
+        "state_duration_s": {
+          "confirmed": 4.77,
+          "temporary": 2.0,
+          "unknown": 1.23
+        },
+        "state_fraction": {
+          "confirmed": 0.596,
+          "temporary": 0.25,
+          "unknown": 0.154
+        },
+        "confirmed_frames": 143,
+        "confirmed_correct": 142,
+        "confirmed_wrong": 0,
+        "confirmed_precision": 1.0,
+        "wrong_person_frames": 0,
+        "correct_person_frames": 202,
+        "claim_accuracy": 1.0,
+        "identity_switches": 0,
+        "temporary_episodes": 2,
+        "face_visible_frames": 164,
+        "unknown_while_face_visible": 37,
+        "unknown_while_face_visible_rate": 0.226,
+        "recovery_times_s": [
+          0.0
+        ],
+        "recovery_mean_s": 0.0,
+        "face_episodes": 1,
+        "time_to_first_confirm_s": 1.23,
+        "confirmed_hold_after_face_loss_s": [
+          0.23
+        ],
+        "confirmed_hold_mean_s": 0.23,
+        "state_fraction_post_lock": {
+          "confirmed": 0.701,
+          "temporary": 0.294,
+          "unknown": 0.005
+        },
+        "centring_active_rate": 0.846,
+        "centring_error_mean_px": 132.2,
+        "centring_in_deadzone_rate": 0.0,
+        "body_visible_frames": 240
+      },
+      "checks": [
+        {
+          "name": "confirmed observed",
+          "ok": true,
+          "detail": "143 confirmed frames"
+        },
+        {
+          "name": "temporary during face loss",
+          "ok": true,
+          "detail": "60 temporary frames"
+        },
+        {
+          "name": "recovered after face loss",
+          "ok": true,
+          "detail": "recovery_mean=0.0s over 1 episodes"
+        },
+        {
+          "name": "confirmed precision",
+          "ok": true,
+          "detail": "100.00% of confirmations correct"
+        },
+        {
+          "name": "no wrong-person claims",
+          "ok": true,
+          "detail": "0 frames claimed a different person"
+        },
+        {
+          "name": "identity continuity",
+          "ok": true,
+          "detail": "0 identity switches"
+        },
+        {
+          "name": "single identity",
+          "ok": true,
+          "detail": "1 identity id(s) claimed for the target (1 people tracked in total)"
+        },
+        {
+          "name": "centring active",
+          "ok": true,
+          "detail": "active in 85% of frames"
+        }
+      ],
+      "passed": true
+    },
+    "occlusion": {
+      "frames": 240,
+      "metrics": {
+        "frames": 240,
+        "duration_s": 8.0,
+        "locked": true,
+        "locked_at": 1.2,
+        "identities_claimed": 1,
+        "identities_created": 2,
+        "state_frames": {
+          "confirmed": 155,
+          "temporary": 48,
+          "unknown": 37
+        },
+        "state_duration_s": {
+          "confirmed": 5.17,
+          "temporary": 1.6,
+          "unknown": 1.23
+        },
+        "state_fraction": {
+          "confirmed": 0.646,
+          "temporary": 0.2,
+          "unknown": 0.154
+        },
+        "confirmed_frames": 155,
+        "confirmed_correct": 153,
+        "confirmed_wrong": 0,
+        "confirmed_precision": 1.0,
+        "wrong_person_frames": 0,
+        "correct_person_frames": 193,
+        "claim_accuracy": 1.0,
+        "identity_switches": 0,
+        "temporary_episodes": 1,
+        "face_visible_frames": 189,
+        "unknown_while_face_visible": 37,
+        "unknown_while_face_visible_rate": 0.196,
+        "recovery_times_s": [
+          0.03
+        ],
+        "recovery_mean_s": 0.03,
+        "face_episodes": 1,
+        "time_to_first_confirm_s": 1.23,
+        "confirmed_hold_after_face_loss_s": [
+          0.13
+        ],
+        "confirmed_hold_mean_s": 0.13,
+        "state_fraction_post_lock": {
+          "confirmed": 0.76,
+          "temporary": 0.235,
+          "unknown": 0.005
+        },
+        "centring_active_rate": 0.817,
+        "centring_error_mean_px": 136.8,
+        "centring_in_deadzone_rate": 0.0,
+        "body_visible_frames": 206
+      },
+      "checks": [
+        {
+          "name": "confirmed observed",
+          "ok": true,
+          "detail": "155 confirmed frames"
+        },
+        {
+          "name": "temporary during face loss",
+          "ok": true,
+          "detail": "48 temporary frames"
+        },
+        {
+          "name": "recovered after face loss",
+          "ok": true,
+          "detail": "recovery_mean=0.03s over 1 episodes"
+        },
+        {
+          "name": "confirmed precision",
+          "ok": true,
+          "detail": "100.00% of confirmations correct"
+        },
+        {
+          "name": "no wrong-person claims",
+          "ok": true,
+          "detail": "0 frames claimed a different person"
+        },
+        {
+          "name": "identity continuity",
+          "ok": true,
+          "detail": "0 identity switches"
+        },
+        {
+          "name": "single identity",
+          "ok": true,
+          "detail": "1 identity id(s) claimed for the target (2 people tracked in total)"
+        },
+        {
+          "name": "centring active",
+          "ok": true,
+          "detail": "active in 82% of frames"
+        }
+      ],
+      "passed": true
+    },
+    "path_crossing": {
+      "frames": 240,
+      "metrics": {
+        "frames": 240,
+        "duration_s": 8.0,
+        "locked": true,
+        "locked_at": 1.2,
+        "identities_claimed": 1,
+        "identities_created": 2,
+        "state_frames": {
+          "confirmed": 165,
+          "temporary": 38,
+          "unknown": 37
+        },
+        "state_duration_s": {
+          "confirmed": 5.5,
+          "temporary": 1.27,
+          "unknown": 1.23
+        },
+        "state_fraction": {
+          "confirmed": 0.688,
+          "temporary": 0.158,
+          "unknown": 0.154
+        },
+        "confirmed_frames": 165,
+        "confirmed_correct": 163,
+        "confirmed_wrong": 0,
+        "confirmed_precision": 1.0,
+        "wrong_person_frames": 0,
+        "correct_person_frames": 198,
+        "claim_accuracy": 1.0,
+        "identity_switches": 0,
+        "temporary_episodes": 1,
+        "face_visible_frames": 197,
+        "unknown_while_face_visible": 37,
+        "unknown_while_face_visible_rate": 0.188,
+        "recovery_times_s": [
+          0.03
+        ],
+        "recovery_mean_s": 0.03,
+        "face_episodes": 1,
+        "time_to_first_confirm_s": 1.23,
+        "confirmed_hold_after_face_loss_s": [
+          0.2
+        ],
+        "confirmed_hold_mean_s": 0.2,
+        "state_fraction_post_lock": {
+          "confirmed": 0.809,
+          "temporary": 0.186,
+          "unknown": 0.005
+        },
+        "centring_active_rate": 0.838,
+        "centring_error_mean_px": 121.2,
+        "centring_in_deadzone_rate": 0.0,
+        "body_visible_frames": 216
+      },
+      "checks": [
+        {
+          "name": "confirmed observed",
+          "ok": true,
+          "detail": "165 confirmed frames"
+        },
+        {
+          "name": "temporary during face loss",
+          "ok": true,
+          "detail": "38 temporary frames"
+        },
+        {
+          "name": "recovered after face loss",
+          "ok": true,
+          "detail": "recovery_mean=0.03s over 1 episodes"
+        },
+        {
+          "name": "confirmed precision",
+          "ok": true,
+          "detail": "100.00% of confirmations correct"
+        },
+        {
+          "name": "no wrong-person claims",
+          "ok": true,
+          "detail": "0 frames claimed a different person"
+        },
+        {
+          "name": "identity continuity",
+          "ok": true,
+          "detail": "0 identity switches"
+        },
+        {
+          "name": "single identity",
+          "ok": true,
+          "detail": "1 identity id(s) claimed for the target (2 people tracked in total)"
+        },
+        {
+          "name": "centring active",
+          "ok": true,
+          "detail": "active in 84% of frames"
+        }
+      ],
+      "passed": true
+    },
+    "combined": {
+      "frames": 270,
+      "metrics": {
+        "frames": 270,
+        "duration_s": 9.0,
+        "locked": true,
+        "locked_at": 1.2,
+        "identities_claimed": 1,
+        "identities_created": 2,
+        "state_frames": {
+          "confirmed": 143,
+          "temporary": 84,
+          "unknown": 43
+        },
+        "state_duration_s": {
+          "confirmed": 4.77,
+          "temporary": 2.8,
+          "unknown": 1.43
+        },
+        "state_fraction": {
+          "confirmed": 0.53,
+          "temporary": 0.311,
+          "unknown": 0.159
+        },
+        "confirmed_frames": 143,
+        "confirmed_correct": 139,
+        "confirmed_wrong": 0,
+        "confirmed_precision": 1.0,
+        "wrong_person_frames": 0,
+        "correct_person_frames": 224,
+        "claim_accuracy": 1.0,
+        "identity_switches": 0,
+        "temporary_episodes": 3,
+        "face_visible_frames": 152,
+        "unknown_while_face_visible": 37,
+        "unknown_while_face_visible_rate": 0.243,
+        "recovery_times_s": [
+          0.0,
+          0.0
+        ],
+        "recovery_mean_s": 0.0,
+        "face_episodes": 2,
+        "time_to_first_confirm_s": 1.23,
+        "confirmed_hold_after_face_loss_s": [
+          0.3,
+          0.2
+        ],
+        "confirmed_hold_mean_s": 0.25,
+        "state_fraction_post_lock": {
+          "confirmed": 0.611,
+          "temporary": 0.359,
+          "unknown": 0.03
+        },
+        "centring_active_rate": 0.841,
+        "centring_error_mean_px": 146.6,
+        "centring_in_deadzone_rate": 0.0,
+        "body_visible_frames": 238
+      },
+      "checks": [
+        {
+          "name": "confirmed observed",
+          "ok": true,
+          "detail": "143 confirmed frames"
+        },
+        {
+          "name": "temporary during face loss",
+          "ok": true,
+          "detail": "84 temporary frames"
+        },
+        {
+          "name": "recovered after face loss",
+          "ok": true,
+          "detail": "recovery_mean=0.0s over 2 episodes"
+        },
+        {
+          "name": "confirmed precision",
+          "ok": true,
+          "detail": "100.00% of confirmations correct"
+        },
+        {
+          "name": "no wrong-person claims",
+          "ok": true,
+          "detail": "0 frames claimed a different person"
+        },
+        {
+          "name": "identity continuity",
+          "ok": true,
+          "detail": "0 identity switches"
+        },
+        {
+          "name": "single identity",
+          "ok": true,
+          "detail": "1 identity id(s) claimed for the target (2 people tracked in total)"
+        },
+        {
+          "name": "centring active",
+          "ok": true,
+          "detail": "active in 84% of frames"
+        }
+      ],
+      "passed": true
+    }
+  }
+}
