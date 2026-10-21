@@ -206,6 +206,14 @@ def main() -> int:
                 if key == ord("u"):
                     pipeline.unlock()
                     print("[lock] cleared")
+                if key == ord("e"):
+                    name = input("enroll the locked person as: ").strip()
+                    got = pipeline.enroll_target(name) if name else None
+                    if got:
+                        book.save()
+                        print(f"[enroll] saved {got!r} -> {book_path}")
+                    else:
+                        print("[enroll] nothing saved (no target locked, or no face seen yet)")
                 if key == ord("s"):
                     snapshot_dir.mkdir(parents=True, exist_ok=True)
                     path = snapshot_dir / f"demo_{frame.index:05d}.png"
@@ -227,6 +235,18 @@ def main() -> int:
         f"\nprocessed {processed} frames in {elapsed:.1f}s "
         f"({fps:.1f} fps end-to-end, {mean_ms:.1f} ms/frame)"
     )
+
+    if args.enroll:
+        got = pipeline.enroll_target(args.enroll)
+        if got:
+            book.save()
+            print(f"[enroll] saved {got!r} -> {book_path}")
+        else:
+            print(
+                f"[enroll] nothing saved for {args.enroll!r} "
+                "(no target locked, or no face was ever seen)"
+            )
+            return 1
 
     if args.summary:
         Path(args.summary).parent.mkdir(parents=True, exist_ok=True)
