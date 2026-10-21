@@ -374,19 +374,34 @@ class IdentityManager:
             ident.state = new_state
 
     def _maybe_auto_lock(self, now: float) -> None:
-        if not self.auto_lock or self.target_identity_id is not None:
+        if not self.auto_lock:
             return
         confirmed = [
             i for i in self.identities.values() if i.state is IdentityState.CONFIRMED
         ]
         if not confirmed:
             return
+        current = self.target
         # A person we can name outranks a stranger we merely saw a face on.
         named = [i for i in confirmed if i.name is not None]
+        # Once an enrollment registry exists, never auto-lock an unidentified
+        # visitor. Wait until ArcFace recognizes a registered person.
+        if self.enrollment is not None and len(self.enrollment) > 0 and not named:
+            return
+        # If an unknown person was auto-locked during camera warm-up, switch
+        # to the enrolled person as soon as their face is recognized. Keep a
+        # named target stable once selected.
+        if current is not None and current.name is not None:
+            return
+        if not named and current is not None:
+            return
         pool = named or confirmed
         best = max(pool, key=lambda i: i.confidence)
+        if current is not None and current.identity_id == best.identity_id:
+            return
         self.target_identity_id = best.identity_id
-        self._log(now, best.identity_id, "auto_lock", best.name or "")
+        detail = f"{best.name} (recognized)" if best.name else "first confirmed person"
+        self._log(now, best.identity_id, "auto_lock", detail)
 
     # ------------------------------------------------------------- enrollment
     def enroll_target(self, name: str, now: float | None = None) -> str | None:

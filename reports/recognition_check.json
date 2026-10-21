@@ -1,0 +1,43 @@
+{
+  "source": "0",
+  "frames": 50,
+  "fps": 4.75,
+  "mean_frame_ms": 194.87,
+  "state_log": [
+    {
+      "t": 0.0,
+      "state": "unknown",
+      "confidence": 0.0,
+      "identity": null,
+      "reason": "no target locked"
+    },
+    {
+      "t": 0.067,
+      "state": "confirmed",
+      "confidence": 0.833,
+      "identity": 1,
+      "reason": "josh: identity confirmed (83%)"
+    },
+    {
+      "t": 0.467,
+      "state": "temporary",
+      "confidence": 0.693,
+      "identity": 1,
+      "reason": "josh: face not visible for 0.3s, confidence decaying (69%)"
+    },
+    {
+      "t": 1.133,
+      "state": "confirmed",
+      "confidence": 0.832,
+      "identity": 1,
+      "reason": "josh: identity confirmed (83%)"
+    },
+    {
+      "t": 1.6,
+      "state": "temporary",
+      "confidence": 0.698,
+      "identity": 1,
+      "reason": "josh: face not visible for 0.3s, confidence decaying (70%)"
+    }
+  ]
+}

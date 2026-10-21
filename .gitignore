@@ -14,6 +14,8 @@ venv/
 # Downloaded assets / generated output
 models/*.pt
 models/*.onnx
+models/insightface/
 data/videos/
 reports/*.mp4
 reports/frames/
+reports/arcface_enrollments.json

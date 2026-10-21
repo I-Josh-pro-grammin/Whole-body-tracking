@@ -42,11 +42,28 @@ python -m venv .venv
 
 python scripts/download_models.py        # YOLOv8n + YuNet ONNX into models/
 
-python scripts/run_demo.py --source 0                          # webcam
+python scripts/run_demo.py --source 0                          # mirrored webcam
 python scripts/run_demo.py --source data/videos/walking.mp4    # video file
 ```
 
-Click a person to lock onto them; `u` unlocks, `s` snapshots, `q` quits.
+The first demo run downloads InsightFace's `buffalo_l` recognition model pack
+into `models/insightface/` if it is not already present. For first enrollment,
+stand alone in view, wait for automatic face confirmation, press `e`, and type
+your name. The name and ArcFace embeddings are stored locally in
+`reports/arcface_enrollments.json`. On later runs, automatic locking waits for
+an enrolled face to match; it does not auto-lock an unidentified visitor. The
+name and confirmation state appear on the locked person's frame.
+
+InsightFace's supplied pretrained model weights are licensed for
+non-commercial research use only; separate permission is needed for commercial
+use. Face embeddings are biometric data, so the registry is kept in a local,
+git-ignored file. Face recognition reduces mistaken locks but cannot guarantee
+zero false matches; ambiguous or weak matches should be treated cautiously.
+
+Webcam input is mirrored by default so moving left/right matches what you see
+on screen. Use `--no-mirror` to disable it; use `--mirror` to mirror a video
+file too. Click a person to lock onto them; `u` unlocks, `s` snapshots, and
+`q` quits.
 
 Everything runs on the CPU. There is no GPU code path and no cloud call.
 
@@ -387,10 +404,9 @@ detections, so 2–3 fps does not produce a stuttering camera — but it is not 
   something a camera produces.
 * **No physical gimbal is driven.** The controller emits normalised commands;
   it does not model servo latency, backlash or inertia.
-* **Re-identification is an appearance histogram, not biometrics.** It is
-  deliberately weak, and the code prefers to refuse (`UNKNOWN`) over guessing
-  when two candidates are close. Two genuinely identical-looking people will
-  produce `UNKNOWN`, which is the intended outcome, not a bug.
+* **Face recognition can still make mistakes.** ArcFace compares facial
+  embeddings and refuses matches below its similarity threshold or near a
+  competing enrolled identity, but it cannot guarantee zero false matches.
 * **`CONFIRMED` can outlive the last face by up to `freshness_window`.** That
   is a measured 0.37–0.50 s of smoothing, reported explicitly as
   `confirmed_hold_after_face_loss_s` rather than hidden.

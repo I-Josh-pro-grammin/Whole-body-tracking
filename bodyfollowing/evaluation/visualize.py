@@ -70,58 +70,66 @@ def draw_overlay(
 
     for body in result.bodies:
         is_target = body.track_id == target_body_id
-        c = color if is_target else (150, 150, 150)
-        _rect(img, body.box, c, thickness if is_target else 1)
-        if is_target:
-            _rect(img, body.head_box, (90, 210, 240), 1)
-        if show_all_tracks:
-            _put(
-                img,
-                f"B{body.track_id}",
-                (int(body.box.x1) + 3, int(body.box.y1) + 14),
-                c,
-                0.42,
-            )
+        if not is_target:
+            continue
+        _rect(img, body.box, color, thickness)
+        _rect(img, body.head_box, (90, 210, 240), 1)
 
     for face in result.faces:
         is_target = face.track_id == target_face_id
-        c = (255, 220, 60) if is_target else (170, 170, 170)
-        _rect(img, face.box, c, 2 if is_target else 1)
+        if is_target:
+            _rect(img, face.box, (255, 220, 60), 2)
 
-    # Frame centre + centring vector.
+    # Draw the target label last so face and body boxes cannot cover it.
+    target = next((b for b in result.bodies if b.track_id == target_body_id), None)
+    if target is not None:
+        label = result.claim.name or "Unrecognized person"
+        label += f" | {STATE_LABELS[result.claim.state]}"
+        cv2 = _cv2()
+        (text_w, text_h), baseline = cv2.getTextSize(
+            label, cv2.FONT_HERSHEY_SIMPLEX, 0.52, 1
+        )
+        label_x = max(0, min(w - text_w - 10, int(target.box.x1)))
+        label_y = max(text_h + baseline + 6, int(target.box.y1))
+        cv2.rectangle(
+            img,
+            (label_x, label_y - text_h - baseline - 6),
+            (label_x + text_w + 10, label_y),
+            color,
+            -1,
+        )
+        _put(img, label, (label_x + 5, label_y - baseline - 3), (255, 255, 255), 0.52, 1)
+
+    # Frame centre marker.
     cx, cy = w // 2, h // 2
     cv2 = _cv2()
     cv2.drawMarker(img, (cx, cy), (120, 120, 120), cv2.MARKER_CROSS, 18, 1)
-    if result.command.active:
-        ex = int(result.command.error_x)
-        ey = int(result.command.error_y)
-        cv2.arrowedLine(
-            img, (cx, cy), (cx + ex, cy + ey), (210, 120, 255), 2, tipLength=0.15
-        )
 
     # HUD: one item per line so nothing can collide as text lengths change.
     panel = img.copy()
-    cv2.rectangle(panel, (6, 6), (min(w - 6, 480), 158), (20, 20, 20), -1)
+    cv2.rectangle(panel, (6, 6), (min(w - 6, 480), 178), (20, 20, 20), -1)
     cv2.addWeighted(panel, 0.55, img, 0.45, 0, img)
 
     state_text = STATE_LABELS[result.claim.state]
     _put(img, f"{state_text}", (16, 30), color, 0.7, 2)
+    person = result.claim.name or "Unrecognized person"
+    _put(img, f"locked person: {person}", (16, 52), (235, 235, 235), 0.5)
     _put(
         img,
         f"identity {result.claim.identity_id if result.claim.identity_id is not None else '-'}"
         f"   confidence {result.claim.confidence:.2f}",
-        (16, 54),
+        (16, 74),
         (235, 235, 235),
         0.48,
     )
-    _confidence_bar(img, 16, 62, 260, 10, result.claim.confidence, color)
-    _put(img, result.claim.reason[:58], (16, 92), (200, 200, 200), 0.42)
+    _confidence_bar(img, 16, 82, 260, 10, result.claim.confidence, color)
+    _put(img, result.claim.reason[:58], (16, 108), (200, 200, 200), 0.42)
     cmd = result.command
     _put(
         img,
         f"pan {cmd.pan:+.2f}  tilt {cmd.tilt:+.2f}  "
         f"err ({cmd.error_x:+.0f},{cmd.error_y:+.0f})px",
-        (16, 116),
+        (16, 132),
         (200, 220, 255),
         0.42,
     )
@@ -129,7 +137,7 @@ def draw_overlay(
         img,
         f"bodies {len(result.bodies)}   faces {len(result.faces)}   "
         f"pairs {len(result.face_body_pairs)}",
-        (16, 140),
+        (16, 156),
         (200, 200, 200),
         0.42,
     )

@@ -15,7 +15,7 @@ Controls (when a window is shown)
 
 Enrollment
 ----------
-    The registry lives in reports/enrollments.json.  Enroll yourself once,
+    The registry lives in reports/arcface_enrollments.json. Enroll yourself once,
     then every later run recognizes and locks you on sight -- no clicking,
     and no drifting onto whoever else walks into frame.
 
@@ -56,6 +56,10 @@ def parse_source(value: str):
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", default="0", help="camera index or video path")
+    mirror = parser.add_mutually_exclusive_group()
+    mirror.add_argument("--mirror", dest="mirror", action="store_true", help="mirror the camera image")
+    mirror.add_argument("--no-mirror", dest="mirror", action="store_false", help="use the camera's unmirrored image")
+    parser.set_defaults(mirror=None)
     parser.add_argument("--max-frames", type=int, default=None)
     parser.add_argument("--save", default=None, help="write an annotated video here")
     parser.add_argument("--snapshot-dir", default="reports/frames")
@@ -66,7 +70,7 @@ def main() -> int:
     parser.add_argument("--summary", default=None, help="write JSON summary here")
     parser.add_argument(
         "--enrollments",
-        default="reports/enrollments.json",
+        default="reports/arcface_enrollments.json",
         help="registry of named people (JSON)",
     )
     parser.add_argument("--enroll", default=None, metavar="NAME", help="enroll the locked target under NAME, then exit")
@@ -82,7 +86,7 @@ def main() -> int:
 
     book_path = Path(args.enrollments)
     config.enrollment.path = str(book_path)
-    book = EnrollmentBook(
+    book = EnrollmentBook.load(
         book_path,
         similarity_threshold=config.enrollment.similarity_threshold,
         margin=config.enrollment.margin,
@@ -111,9 +115,11 @@ def main() -> int:
         return 2
 
     pipeline = BodyFollowingPipeline(config, detector=detector, enrollment=book)
+    source_value = parse_source(args.source)
+    mirror_view = args.mirror if args.mirror is not None else isinstance(source_value, int)
     source = VideoSource(
-        parse_source(args.source),
-        width=None if isinstance(parse_source(args.source), str) else 640,
+        source_value,
+        width=None if isinstance(source_value, str) else 640,
         real_time=False,
     )
 
@@ -160,7 +166,10 @@ def main() -> int:
     try:
         for frame in source.frames(max_frames=args.max_frames):
             t0 = time.perf_counter()
-            result = pipeline.step(frame.image, now=frame.timestamp)
+            # Flip before detection so rendered boxes and mouse clicks use the
+            # same mirrored coordinate system as the displayed camera view.
+            image = np.ascontiguousarray(frame.image[:, ::-1]) if mirror_view else frame.image
+            result = pipeline.step(image, now=frame.timestamp)
             frame_times.append(time.perf_counter() - t0)
             last_bodies = result.bodies
             processed += 1
@@ -181,7 +190,7 @@ def main() -> int:
                     }
                 )
 
-            vis = draw_overlay(frame.image, result)
+            vis = draw_overlay(image, result)
 
             if args.save:
                 import cv2

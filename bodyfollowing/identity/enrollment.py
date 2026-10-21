@@ -53,6 +53,10 @@ def _mean_descriptor(samples: Iterable[np.ndarray]) -> np.ndarray | None:
     stacked = [s for s in (_normalize(v) for v in samples) if s is not None]
     if not stacked:
         return None
+    # A registry created before switching embedding models may contain vectors
+    # with a different size. Average only the most recent model's dimensions.
+    current_size = stacked[-1].size
+    stacked = [sample for sample in stacked if sample.size == current_size]
     return _normalize(np.mean(np.stack(stacked, axis=0), axis=0))
 
 

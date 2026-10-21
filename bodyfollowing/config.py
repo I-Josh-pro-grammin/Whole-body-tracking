@@ -115,17 +115,15 @@ class IdentityConfig:
 class EnrollmentConfig:
     """Persistent recognition of named people across runs.
 
-    An enrolled person is identified by a stored appearance descriptor.  The
-    thresholds are deliberately strict: this is a colour-layout signature,
-    not a face embedding, so a false name is far worse than no name.
+    An enrolled person is identified by a stored ArcFace embedding.
     """
 
     # JSON registry of enrolled people (None = keep it in memory only).
-    path: str | None = "reports/enrollments.json"
+    path: str | None = "reports/arcface_enrollments.json"
     # Minimum cosine similarity to accept a recognition.
-    similarity_threshold: float = 0.80
+    similarity_threshold: float = 0.50
     # Best must beat the runner-up by this much, or the match is refused.
-    margin: float = 0.05
+    margin: float = 0.08
     # Observations kept per person (oldest dropped beyond this).
     max_samples: int = 12
     # A recognized person is locked on sight without waiting for a click.

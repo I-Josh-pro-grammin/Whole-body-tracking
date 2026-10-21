@@ -13,6 +13,7 @@ scipy>=1.11                 # optimal assignment (a numpy fallback is bundled)
 ultralytics>=8.3            # YOLOv8n person detector
 torch>=2.4                  # CPU build
 torchvision>=0.19
+insightface>=0.7.3           # ArcFace face embeddings (CPU via ONNX Runtime)
 
 # development / evaluation
 pytest>=8.0

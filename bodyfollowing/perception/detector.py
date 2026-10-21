@@ -13,7 +13,8 @@ import numpy as np
 
 from ..config import DetectorConfig
 from ..types import Box, Detection
-from .appearance import DetectionBatch, estimate_yaw, face_descriptor
+from .appearance import DetectionBatch, estimate_yaw
+from .arcface import ArcFaceEmbedder
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -102,6 +103,12 @@ class YuNetFaceDetector:
         self.detector = create(
             str(model_path), "", (320, 320), self.config.face_conf, 0.3, 5000
         )
+        try:
+            self.recognizer = ArcFaceEmbedder(
+                root=PROJECT_ROOT / "models" / "insightface"
+            )
+        except RuntimeError as exc:
+            raise ModelNotFound(str(exc)) from exc
         self._input_size: tuple[int, int] | None = None
 
     def detect(
@@ -140,7 +147,7 @@ class YuNetFaceDetector:
                     landmarks=landmarks,
                 )
             )
-            descriptors.append(face_descriptor(frame, box))
+            descriptors.append(self.recognizer.embed(frame, landmarks))
             yaws.append(estimate_yaw(landmarks))
         return detections, descriptors, yaws
 
