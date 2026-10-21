@@ -12,6 +12,7 @@ is exact.
 
 from __future__ import annotations
 
+import utils.session
 import argparse
 import json
 import sys

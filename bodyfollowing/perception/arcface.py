@@ -17,7 +17,8 @@ class ArcFaceEmbedder:
 
     def __init__(self, model_pack: str = "buffalo_l", root: str | Path | None = None):
         try:
-            from insightface.app import FaceAnalysis
+            from insightface.model_zoo import get_model
+            from insightface.utils.storage import ensure_available
             from insightface.utils import face_align
         except Exception as exc:  # pragma: no cover - environment dependent
             raise RuntimeError(
@@ -27,17 +28,28 @@ class ArcFaceEmbedder:
 
         self._face_align = face_align
         try:
-            self._app = FaceAnalysis(
-                name=model_pack,
-                allowed_modules=["recognition"],
-                providers=["CPUExecutionProvider"],
-                root=str(root) if root is not None else None,
+            model_dir = Path(
+                ensure_available(
+                    "models",
+                    model_pack,
+                    root=str(root) if root is not None else "~/.insightface",
+                )
             )
-            self._app.prepare(ctx_id=-1)
-            self._model = self._app.models["recognition"]
+            model_path = model_dir / "w600k_r50.onnx"
+            if not model_path.is_file():
+                raise FileNotFoundError(
+                    f"ArcFace recognition model not found: {model_path}"
+                )
+            self._model = get_model(
+                str(model_path), providers=["CPUExecutionProvider"]
+            )
+            if self._model is None:
+                raise RuntimeError(f"InsightFace did not recognize {model_path}")
+            self._model.prepare(ctx_id=-1)
         except Exception as exc:  # pragma: no cover - model/runtime dependent
             raise RuntimeError(
-                f"Could not load ArcFace model pack {model_pack!r}: {exc}"
+                f"Could not load ArcFace model pack {model_pack!r}: "
+                f"{type(exc).__name__}: {exc!r}"
             ) from exc
 
     def embed(

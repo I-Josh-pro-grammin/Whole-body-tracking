@@ -202,6 +202,8 @@ def build_detector(config: DetectorConfig | None = None) -> CompositeDetector:
         return CompositeDetector(config)
     except ModelNotFound as exc:
         raise ModelNotFound(
-            f"{exc}\nHint: run `python scripts/download_models.py` "
-            "and ensure `pip install -r requirements.txt` completed."
+            f"{exc}\nHint: install dependencies with "
+            "`python -m pip install -r requirements.txt`. YOLO and YuNet "
+            "files can be fetched with `python scripts/download_models.py`; "
+            "the ArcFace pack downloads on first use."
         ) from exc
